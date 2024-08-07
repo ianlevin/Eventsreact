@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-const LoginScreen = ({ navigation }) => {
-  const [username, setEmail] = useState('');
+const RegisterScreen = ({ navigation }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/user/login', { username, password });
+      const response = await axios.post('YOUR_REGISTER_API_ENDPOINT', { firstName, lastName, username, password });
       if (response.data.success) {
-        navigation.navigate('Home');
+        navigation.navigate('Login');
       } else {
-        alert('Login failed');
+        alert('Registration failed');
       }
     } catch (error) {
       console.error(error);
@@ -22,12 +24,24 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
+      <Text>Register</Text>
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="First Name"
+        value={firstName}
+        onChangeText={setFirstName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Last Name"
+        value={lastName}
+        onChangeText={setLastName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
         value={username}
-        onChangeText={setEmail}
+        onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}
@@ -36,11 +50,7 @@ const LoginScreen = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Login" onPress={handleLogin} />
-      <View style={styles.registerContainer}>
-        <Text>Don't have an account?</Text>
-        <Button title="Register" onPress={() => navigation.navigate('Register')} />
-      </View>
+      <Button title="Register" onPress={handleRegister} />
     </View>
   );
 };
@@ -58,10 +68,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 8,
   },
-  registerContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
 });
 
-export default LoginScreen;
+export default RegisterScreen;
