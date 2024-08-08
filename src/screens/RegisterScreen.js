@@ -3,14 +3,14 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 
 const RegisterScreen = ({ navigation }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post('YOUR_REGISTER_API_ENDPOINT', { firstName, lastName, username, password });
+      const response = await axios.post('http://localhost:3000/api/user/register', { first_name, last_name, username, password });
       if (response.data.success) {
         navigation.navigate('Login');
       } else {
@@ -28,13 +28,13 @@ const RegisterScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="First Name"
-        value={firstName}
+        value={first_name}
         onChangeText={setFirstName}
       />
       <TextInput
         style={styles.input}
         placeholder="Last Name"
-        value={lastName}
+        value={last_name}
         onChangeText={setLastName}
       />
       <TextInput
