@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { storeData, getData, removeData, clearStorage } from '../storage.js';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setEmail] = useState('');
@@ -10,6 +11,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       const response = await axios.post('http://localhost:3000/api/user/login', { username, password });
       if (response.data.success) {
+        storeData('username',username)
         navigation.navigate('Home');
       } else {
         alert('Login failed');
